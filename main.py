@@ -6,6 +6,8 @@ from src.wine_quality.pipeline.data_transformation_pipeline import DataTransform
 
 logger.info("Welcome to our Custom Logging for the End-to-end Data Science Project")
 
+
+# ======================================================================================
 STAGE_NAME = "Data Ingestion Stage"
 
 try:
@@ -18,6 +20,11 @@ except Exception as e:
     logger.exception(e)
     raise e
 
+
+
+
+
+# ======================================================================================
 
 STAGE_NAME = "Data Validation Stage"
 
@@ -32,6 +39,9 @@ except Exception as e:
     raise e
 
 
+
+
+# ======================================================================================
 
 STAGE_NAME = "Data Transformation Stage"
 
