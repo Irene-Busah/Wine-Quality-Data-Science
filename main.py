@@ -3,6 +3,7 @@ from src.wine_quality.pipeline.data_ingestion_pipeline import DataIngestionTrain
 from src.wine_quality.pipeline.data_validation_pipeline import DataValidationPipeline
 from src.wine_quality.pipeline.data_transformation_pipeline import DataTransformationPipeline
 from src.wine_quality.pipeline.model_training_pipeline import ModelTrainingPipeline
+from src.wine_quality.pipeline.model_evaluation_pipeline import ModelEvaluationPipeline
 
 
 logger.info("Welcome to our Custom Logging for the End-to-end Data Science Project")
@@ -61,6 +62,22 @@ try:
     logger.info(f"------------ Stage [{STAGE_NAME}] Started ------------")
     obj = ModelTrainingPipeline()
     obj.initiate_model_training()
+    logger.info(f"------------ Stage [{STAGE_NAME}] Completed ------------")
+
+except Exception as e:
+    logger.exception(e)
+    raise e
+
+
+
+# ======================================== Model Training ========================================
+
+STAGE_NAME = "Model Evaluation Stage"
+
+try:
+    logger.info(f"------------ Stage [{STAGE_NAME}] Started ------------")
+    obj = ModelEvaluationPipeline()
+    obj.initiate_model_evaluation()
     logger.info(f"------------ Stage [{STAGE_NAME}] Completed ------------")
 
 except Exception as e:

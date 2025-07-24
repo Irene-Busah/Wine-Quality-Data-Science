@@ -7,8 +7,8 @@ The file implements the configuration management class
 
 # importing the needed libraries
 from src.wine_quality.constants import CONFIG_FILE_PATH, PARAMS_FILE_PATH, SCHEMA_FILE_PATH
-from src.wine_quality.utils.common import read_yaml, create_directories
-from src.wine_quality.entity.entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainingConfig
+from src.wine_quality.utils.common import read_yaml, create_directories, save_json
+from src.wine_quality.entity.entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainingConfig, ModelEvaluationConfig
 
 
 class ConfigurationManager:
@@ -78,5 +78,24 @@ class ConfigurationManager:
         )
 
         return model_training_config
+    
+    def get_model_evaluation_config(self) -> ModelEvaluationConfig:
+        config = self.config.model_evaluation
+        schema = self.schema.TARGET_COLUMN
+        params = self.params.ElasticNet
+
+        create_directories([config.root_dir])
+
+        model_evaluation_config = ModelEvaluationConfig(
+            root_dir=config.root_dir,
+            test_data_path=config.test_data_path,
+            model_path=config.model_path,
+            all_params=params,
+            metric_filename=config.metric_filename,
+            target_column=schema.name,
+            mlflow_uri="https://dagshub.com/i.busah/Wine-Quality-Data-Science.mlflow"
+        )
+
+        return model_evaluation_config
 
 
