@@ -3,6 +3,7 @@
 import streamlit as st
 import numpy as np
 import os
+import pandas as pd
 from src.wine_quality.pipeline.prediction_pipeline import PredictionPipeline
 
 st.set_page_config(page_title="Wine Quality Predictor", page_icon="🍷", layout="centered")
@@ -58,14 +59,19 @@ if page == "Predict Wine Quality":
 
         if submit:
             try:
-                input_data = np.array([
+                # Create a DataFrame with proper column names
+                input_df = pd.DataFrame([[
                     fixed_acidity, volatile_acidity, citric_acid, residual_sugar,
                     chlorides, free_sulfur_dioxide, total_sulfur_dioxide,
                     density, pH, sulphates, alcohol
-                ]).reshape(1, -1)
+                ]], columns=[
+                    "fixed acidity", "volatile acidity", "citric acid", "residual sugar",
+                    "chlorides", "free sulfur dioxide", "total sulfur dioxide",
+                    "density", "pH", "sulphates", "alcohol"
+                ])
 
                 pipeline = PredictionPipeline()
-                prediction = pipeline.predict(input_data)
+                prediction = pipeline.predict(input_df)
 
                 st.session_state.predicted = True
                 st.session_state.prediction_value = prediction[0]
